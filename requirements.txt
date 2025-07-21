@@ -4,3 +4,6 @@ numpy
 nltk
 matplotlib
 streamlit
+transformers
+torch
+faiss-cpu
