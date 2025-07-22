@@ -1,16 +1,22 @@
 import torch
 import numpy as np
-
 import os
-os.environ["HF_HOME"] = "D:/huggingface_cache"
+
+# Cho phép cấu hình động đường dẫn cache HuggingFace
+HF_HOME = os.environ.get("HF_HOME", os.path.expanduser("~/.cache/huggingface"))
+os.environ["HF_HOME"] = HF_HOME
 
 from transformers import AutoTokenizer, AutoModel
 
 model_name = "sentence-transformers/all-MiniLM-L6-v2"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModel.from_pretrained(model_name)
+tokenizer = None
+model = None
 
 def get_embedding(text):
+    global tokenizer, model
+    if tokenizer is None or model is None:
+        tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=HF_HOME)
+        model = AutoModel.from_pretrained(model_name, cache_dir=HF_HOME)
     prompt = f"query: {text}"
     inputs = tokenizer(prompt, return_tensors="pt", truncation=True, padding=True)
     with torch.no_grad():

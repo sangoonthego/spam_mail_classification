@@ -1,7 +1,11 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import pandas as pd
-from embedding_model import get_embedding
-from vector_index import create_index, add_to_index, save_index, save_labels, load_index, load_labels
-from knn_classifier import predict_label
+from vector_db.embedding_model import get_embedding
+from vector_db.vector_index import create_index, add_to_index, save_index, save_labels, load_index, load_labels
+from vector_db.knn_classifier import predict_label
 
 dataset_path = "data/spam.csv"
 
@@ -13,6 +17,8 @@ def train_pipeline(dataset_path):
     messages = df["Message"].tolist()
     labels = df["Label"].tolist()
     vectors = [get_embedding(message) for message in messages]
+    if not vectors:
+        raise ValueError("No vectors generated from dataset. Check your data file.")
     index = create_index(dim=len(vectors[0]))
     add_to_index(index, vectors)
     save_index(index, index_file)
@@ -20,6 +26,15 @@ def train_pipeline(dataset_path):
     print("Saved Successfully!!!")
 
 def predict_pipeline(text_list, k=3):
+    need_train = False
+    if not os.path.exists(index_file):
+        print(f"Index file not found: {index_file}. Training model...")
+        need_train = True
+    if not os.path.exists(label_file):
+        print(f"Label file not found: {label_file}. Training model...")
+        need_train = True
+    if need_train:
+        train_pipeline(dataset_path)
     index = load_index(index_file)
     labels = load_labels(label_file)
     all_predictions = []
