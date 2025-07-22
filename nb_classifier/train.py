@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pandas as pd
 import numpy as np
 import pickle
@@ -5,7 +9,7 @@ import pickle
 from sklearn.naive_bayes import GaussianNB
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from preprocess import preprocess_text
+from nb_classifier.preprocess import preprocess_text
 
 dataset_path = "data/spam.csv"
 
