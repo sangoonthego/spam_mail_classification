@@ -1,4 +1,4 @@
-# Spam Mail Detection
+# Spam Mail Classification
 
 ## Project Overview
 This project implements a spam mail detection system using two different approaches:
@@ -6,6 +6,9 @@ This project implements a spam mail detection system using two different approac
 2. A modern vector database approach using transformer embeddings and KNN classification
 
 The project provides both approaches for comparison and research purposes, along with a Streamlit web application for easy interaction.
+
+## Demo
+- Try the app here: https://spammaildet-ygc59ixdylqc3y2xvohfzt.streamlit.app/
 
 ## Features
 - Two different spam detection approaches:
