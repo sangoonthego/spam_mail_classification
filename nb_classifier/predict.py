@@ -1,8 +1,12 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import numpy as np
 import pickle
 
-from preprocess import preprocess_text
-from train import create_features
+from nb_classifier.preprocess import preprocess_text
+from nb_classifier.train import create_features
 
 with open("pickle/model.pkl", "rb") as file:
     model = pickle.load(file)
