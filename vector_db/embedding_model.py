@@ -2,7 +2,6 @@ import torch
 import numpy as np
 import os
 
-# Cho phép cấu hình động đường dẫn cache HuggingFace
 HF_HOME = os.environ.get("HF_HOME", os.path.expanduser("~/.cache/huggingface"))
 os.environ["HF_HOME"] = HF_HOME
 
